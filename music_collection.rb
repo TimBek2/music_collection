@@ -9,7 +9,7 @@ command = gets.chomp
 
 words = command.split
 
-action = words.shift.downcase.first
+action = words.shift.downcase
 
 # Iterate string to find indices of quotes
 # command.each_index.select { |c| c == '"' }
