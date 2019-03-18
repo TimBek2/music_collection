@@ -1,5 +1,9 @@
 require 'pry'
 
+class Song
+  attr_reader :name, :artist, :played
+end
+
 music_collection = Hash.new { |hash, key| hash[key] = Hash.new(&hash.default_proc) }
 
 puts 'Welcome to your music collection!'
@@ -23,12 +27,12 @@ when 'add'
   info = words.join(' ')
   quote_indices = info.chars.each_index.select { |i| info[i] == '"'}
 
-  p 'Please wrap the song and artist in double-quotes (")' unless quote_indices.length == 4
+  puts 'Please wrap the song and artist in double-quotes (")' unless quote_indices.length == 4
 
   title = info.slice!((quote_indices[0])..quote_indices[1]).delete_prefix('"').delete_suffix('"')
   artist = info.strip.delete_prefix('"').delete_suffix('"')
 
   music_collection[artist][title] = false
 
-  binding.pry
+  puts "Added \"#{title}\" by #{artist}"
 end
