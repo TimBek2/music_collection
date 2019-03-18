@@ -39,6 +39,12 @@ when 'show'
   secondary_action = words.shift.downcase
 
   if secondary_action == 'all'
-    binding.pry
+    puts "You haven't added any songs yet!" if music_collection.empty?
+
+    music_collection.each do |artist, song|
+      song.each do |title, played|
+        puts "\"#{title}\" by #{artist} #{ played ? 'played' : 'unplayed' }"
+      end
+    end
   end
 end
