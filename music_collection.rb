@@ -47,6 +47,18 @@ until (command = gets.chomp) == 'quit'
       end
     end
 
+  when 'play'
+    title = words.join(' ').delete_prefix('"').delete_suffix('"')
+    music_collection.each do |artist, songs|
+      if songs.has_key? title
+        music_collection[artist][title] = true
+        puts "You're listening to \"#{title}\""
+      else
+        "You haven't added that song!"
+      end
+    end
+
+  # close case statement
   end
 end
 
