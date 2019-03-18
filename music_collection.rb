@@ -40,9 +40,15 @@ until (command = gets.chomp) == 'quit'
     if secondary_action == 'all'
       puts "You haven't added any songs yet!" if music_collection.empty?
 
-      music_collection.each do |artist, song|
-        song.each do |title, played|
+      music_collection.each do |artist, songs|
+        songs.each do |title, played|
           puts "\"#{title}\" by #{artist} #{ played ? 'played' : 'unplayed' }"
+        end
+      end
+    elsif secondary_action == 'unplayed'
+      music_collection.each do |artist, songs|
+        songs.each do |title, played|
+          puts "\"#{title}\" by #{artist}" if !played
         end
       end
     end
