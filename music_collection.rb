@@ -21,7 +21,6 @@ action = words.shift.downcase
 # slice those quotes out to get song name(first set if present)
 # artist(second set if present)
 
-
 case action
 when 'add'
   info = words.join(' ')
@@ -35,4 +34,11 @@ when 'add'
   music_collection[artist][title] = false
 
   puts "Added \"#{title}\" by #{artist}"
+
+when 'show'
+  secondary_action = words.shift.downcase
+
+  if secondary_action == 'all'
+    binding.pry
+  end
 end
