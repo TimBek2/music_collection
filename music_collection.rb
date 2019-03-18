@@ -1,9 +1,5 @@
 require 'pry'
 
-class Song
-  attr_reader :name, :artist, :played
-end
-
 music_collection = Hash.new { |hash, key| hash[key] = Hash.new(&hash.default_proc) }
 
 puts 'Welcome to your music collection!'
@@ -35,20 +31,34 @@ until (command = gets.chomp) == 'quit'
     puts "Added \"#{title}\" by #{artist}"
 
   when 'show'
+    puts "You haven't added any songs yet!" if music_collection.empty?
+
     secondary_action = words.shift.downcase
 
     if secondary_action == 'all'
-      puts "You haven't added any songs yet!" if music_collection.empty?
-
-      music_collection.each do |artist, songs|
-        songs.each do |title, played|
+      if words[0] == 'by'
+        artist = words[1].delete_prefix('"').delete_suffix('"')
+        music_collection[artist].each do |title, played|
           puts "\"#{title}\" by #{artist} #{ played ? 'played' : 'unplayed' }"
+        end
+      else
+        music_collection.each do |artist, songs|
+          songs.each do |title, played|
+            puts "\"#{title}\" by #{artist} #{ played ? 'played' : 'unplayed' }"
+          end
         end
       end
     elsif secondary_action == 'unplayed'
-      music_collection.each do |artist, songs|
-        songs.each do |title, played|
+      if words[0] == 'by'
+        artist = words[1].delete_prefix('"').delete_suffix('"')
+        music_collection[artist].each do |title, played|
           puts "\"#{title}\" by #{artist}" if !played
+        end
+      else
+        music_collection.each do |artist, songs|
+          songs.each do |title, played|
+            puts "\"#{title}\" by #{artist}" if !played
+          end
         end
       end
     end
@@ -63,7 +73,6 @@ until (command = gets.chomp) == 'quit'
         "You haven't added that song!"
       end
     end
-
   # close case statement
   end
 end
