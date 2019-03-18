@@ -20,6 +20,13 @@ action = words.shift.downcase
 
 case action
 when 'add'
+  info = words.join(' ')
+  quote_indices = info.chars.each_index.select { |i| info[i] == '"'}
+
+  p 'Please wrap the song and artist in double-quotes (")' unless quote_indices.length == 4
+
+  song = info.slice!((quote_indices[0] + 1)...quote_indices[1])
+
   binding.pry
 end
 
