@@ -1,6 +1,6 @@
 require 'pry'
 
-music_collection = {}
+music_collection = Hash.new { |hash, key| hash[key] = Hash.new(&hash.default_proc) }
 
 puts 'Welcome to your music collection!'
 puts 'What would you like to do?'
@@ -25,12 +25,10 @@ when 'add'
 
   p 'Please wrap the song and artist in double-quotes (")' unless quote_indices.length == 4
 
-  song = info.slice!((quote_indices[0] + 1)...quote_indices[1])
+  title = info.slice!((quote_indices[0])..quote_indices[1]).delete_prefix('"').delete_suffix('"')
+  artist = info.strip.delete_prefix('"').delete_suffix('"')
+
+  music_collection[artist][title] = false
 
   binding.pry
-end
-
-class Song
-  attr_accessor :played
-  attr_reader :name, :artist
 end
